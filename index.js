@@ -27,7 +27,7 @@ const pr = payload.pull_request
 
 if (!pr.merged) {
 	console.log('Pull request has not been merged yet, going to bail')
-	return
+	throw new Error('Invalid PR State: Pull request has not yet been merged')
 }
 
 const commits = await githupApi('GET', pr._links.commits.href)
