@@ -24,9 +24,12 @@ if (!chatId || !prontoApiToken || !githubApiToken) {
 }
 
 const pr = payload.pull_request
-
+if (!pr) {
+	console.log('No pull request associated with this action. Going to bail.')
+	throw new Error('Invalid PR State: Pull request does not exist')
+}
 if (!pr.merged) {
-	console.log('Pull request has not been merged yet, going to bail')
+	console.log('Pull request has not been merged yet. Going to bail.')
 	throw new Error('Invalid PR State: Pull request has not yet been merged')
 }
 
