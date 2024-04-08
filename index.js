@@ -26,10 +26,9 @@ try {
 	if (!pr) {
 		throw new Error('Invalid PR State: Pull request does not exist')
 	}
-	// if (!pr.merged) {
-	// 	console.log('Pull request has not been merged yet. Going to bail.')
-	// 	throw new Error('Invalid PR State: Pull request has not yet been merged')
-	// }
+	if (!pr.merged) {
+		throw new Error('Invalid PR State: Pull request has not yet been merged')
+	}
 	console.log('*************** STARTING ******************')
 	const response = await githupApi('GET', pr._links.commits.href)
 	const messageText = generateMessage(pr, repository, response.data)
