@@ -48,7 +48,8 @@ try {
 }
 
 function generateMessage(pr, repo, commits) {
-	const commitMsgs = commits.map(c => c.commit.message)
+	const allCommitMsgs = commits.map(c => c.commit.message)
+	const commitMsgs = Array.from(new Set(allCommitMsgs))
 	const forDisplay = commitMsgs.slice(0, parseInt(maxCommits))
 	const moreCount = commitMsgs.length - forDisplay.length
 	const moreText = moreCount > 0 ? `-- and ${moreCount} more commits` : null
@@ -60,7 +61,7 @@ function generateMessage(pr, repo, commits) {
 		`PR Link: ${pr.html_url}`,
 		`Branch: ${pr.base.ref}`,
 		'',
-		'Commits:',
+		`Commits (${allCommitMsgs.length}):`,
 		...forDisplay.map(msg => `${tab}-- ${msg}`),
 		moreText ? `${tab}${moreText}` : '',
 	].join('\n')
