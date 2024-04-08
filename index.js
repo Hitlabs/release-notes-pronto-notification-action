@@ -42,7 +42,8 @@ try {
 	const forDisplay = commitMsgs.slice(0, parseInt(maxCommits))
 	const moreCount = commitMsgs.length - forDisplay.length
 	const moreText = moreCount > 0 ? `\nand ${moreCount} more commits` : null
-	let releaseNotes = `${pr.title}:\n${forDisplay.map(msg => `-- ${msg}`).join('\n')}`
+	const commitText = forDisplay.map(msg => `-- ${msg}`).join('\n')
+	let releaseNotes = `New release to ${pr.base.ref}\n\n"${pr.title}":\nPull Request: ${pr.html_url}\n${commitText}`
 	if (moreText) {
 		releaseNotes += moreText
 	}

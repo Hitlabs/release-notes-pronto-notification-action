@@ -14,7 +14,7 @@ inputs:
     description: "The Pronto API token used to make API requests"
     required: true
   api-domain:
-    description: "The domain of the Pronto server. 'api.pronto.io' is used by default."
+    description: "The domain of the Pronto server. Defaults to 'api.pronto.io'."
     required: false
 runs:
   using: 'node20'
