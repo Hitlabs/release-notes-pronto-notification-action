@@ -56,6 +56,7 @@ function generateMessage(pr, repo, commits) {
 	const noteLines = [
 		`PR: "${pr.title}"`,
 		`PR Link: ${pr.html_url}`,
+		`Branch: ${pr.base.ref}`,
 		'Commits:',
 		...forDisplay.map(msg => `${tab}-- ${msg}`),
 		moreText ? `${tab}${moreText}` : '',
