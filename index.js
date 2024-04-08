@@ -6,6 +6,7 @@ const prontoApiToken = core.getInput('pronto-api-token')
 const githubApiToken = core.getInput('github-api-token')
 const chatId = core.getInput('chat-id')
 const prontoDomain = core.getInput('api-domain') || 'api.pronto.io'
+const maxCommits = core.getInput('max-commits') || '10'
 const { payload } = github.context
 
 const MSG_ID_REGEXP = /\[\[PRONTO_MSG_ID:(\d.*)\]\]/
@@ -35,8 +36,18 @@ if (!pr) {
 
 try {
 	console.log('*************** STARTING ******************')
-	const commits = await githupApi('GET', pr._links.commits.href)
-	console.log('COMMITS', JSON.stringify(commits.data, null, 4))
+	const response = await githupApi('GET', pr._links.commits.href)
+	console.log('COMMITS', JSON.stringify(response.data, null, 4))
+	const commitMsgs = response.data.map(c => c.commit.message)
+	const forDisplay = commitMsgs.slice(0, parseInt(maxCommits))
+	const moreCount = commitMsgs.length - forDisplay.length
+	const moreText = moreCount > 0 ? `\nand ${moreCount} more commits` : null
+	let releaseNotes = `${pr.title}:\n${forDisplay.map(msg => `-- ${msg}`).join('\n')}`
+	if (moreText) {
+		releaseNotes += moreText
+	}
+	console.log('*************** FINAL MESSAGE ******************')
+	console.log(releaseNotes)
 	console.log('*************** DONE ******************')
 } catch (e) {
 	console.error(e)

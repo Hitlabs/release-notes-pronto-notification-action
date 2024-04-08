@@ -4,6 +4,9 @@ inputs:
   chat-id:
     description: "The ID of the Pronto chat in which to send the message."
     required: true
+  max-commits:
+    description: "Maximum number of commit messages to include. Defaults to 10."
+    required: false
   github-api-token:
     description: "The Github API token used to make API requests"
     required: true
