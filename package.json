@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Sends a Pronto message when a PR is opened",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
