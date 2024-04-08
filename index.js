@@ -9,12 +9,7 @@ const prontoDomain = core.getInput('api-domain') || 'api.pronto.io'
 const maxCommits = core.getInput('max-commits') || '10'
 const messagePrefix = core.getInput('message-prefix')
 
-const { payload } = github.context
 const tab = '    '
-
-console.log(`Chat ID: ${chatId}`)
-console.log(`The event payload: ${JSON.stringify(payload, null, 2)}`)
-
 
 try {
 	console.log('*************** PRECHECK ******************')
@@ -27,7 +22,7 @@ try {
 			})}`
 		)
 	}
-	const { pull_request: pr, repository } = payload.pull_request
+	const { pull_request: pr, repository } = github.context.payload
 	if (!pr) {
 		throw new Error('Invalid PR State: Pull request does not exist')
 	}
@@ -42,6 +37,14 @@ try {
 	console.log('*************** DONE ******************')
 } catch (e) {
 	console.error(e)
+	console.log('Variables', JSON.stringify({
+		chatId,
+		maxCommits,
+		messagePrefix,
+		prontoApiToken,
+		githubApiToken,
+	}))
+	console.log('The event payload:', JSON.stringify(github.context.payload, null, 2))
 }
 
 function generateMessage(pr, repo, commits) {
@@ -68,7 +71,7 @@ function generateMessage(pr, repo, commits) {
 }
 
 async function postToPronto(messageText) {
-	console.log('[PRONTO API] sending message to pronto...')
+	console.log(`[PRONTO API] sending message to pronto chat ${chatId}...`)
 	const response = await axios({
 		method: 'POST',
 		url: `https://${prontoDomain}/api/chats/${chatId}/messages`,
