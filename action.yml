@@ -4,6 +4,9 @@ inputs:
   chat-id:
     description: "The ID of the Pronto chat in which to send the message."
     required: true
+  message-prefix:
+    description: "Static text displayed at the start of the Pronto message."
+    required: false
   max-commits:
     description: "Maximum number of commit messages to include. Defaults to 10."
     required: false
