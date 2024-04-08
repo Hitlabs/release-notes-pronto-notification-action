@@ -28,10 +28,10 @@ if (!pr) {
 	console.log('No pull request associated with this action. Going to bail.')
 	throw new Error('Invalid PR State: Pull request does not exist')
 }
-if (!pr.merged) {
-	console.log('Pull request has not been merged yet. Going to bail.')
-	throw new Error('Invalid PR State: Pull request has not yet been merged')
-}
+// if (!pr.merged) {
+// 	console.log('Pull request has not been merged yet. Going to bail.')
+// 	throw new Error('Invalid PR State: Pull request has not yet been merged')
+// }
 
 console.log('*********************************')
 const commits = await githupApi('GET', pr._links.commits.href)
