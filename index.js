@@ -51,20 +51,18 @@ function generateMessage(pr, repo, commits) {
 	const commitMsgs = commits.map(c => c.commit.message)
 	const forDisplay = commitMsgs.slice(0, parseInt(maxCommits))
 	const moreCount = commitMsgs.length - forDisplay.length
-	const moreText = moreCount > 0 ? `\nand ${moreCount} more commits` : null
+	const moreText = moreCount > 0 ? `-- and ${moreCount} more commits` : null
 
-	const noteLines = [
+	const message = [
+		messagePrefix ? `### ${messagePrefix}` : `### New release for ${repo.name}`,
+		'',
 		`PR: "${pr.title}"`,
 		`PR Link: ${pr.html_url}`,
 		`Branch: ${pr.base.ref}`,
+		'',
 		'Commits:',
 		...forDisplay.map(msg => `${tab}-- ${msg}`),
 		moreText ? `${tab}${moreText}` : '',
-	]
-	const message = [
-		messagePrefix ? `### ${messagePrefix}` : `### New release for ${repo.name}`,
-		`"${pr.title}"`,
-		...noteLines.map(line => tab + line)
 	].join('\n')
 
 	return message
