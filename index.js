@@ -30,7 +30,10 @@ if (!pr.merged) {
 	throw new Error('Invalid PR State: Pull request has not yet been merged')
 }
 
+console.log('*********************************')
 const commits = await githupApi('GET', pr._links.commits.href)
+console.log('*********************************')
+console.log('COMMITS', JSON.stringify(commits, null, 4))
 
 async function postToPronto(event, parent_id) {
 	const { pull_request, sender } = event
