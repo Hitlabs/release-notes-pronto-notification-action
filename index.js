@@ -33,10 +33,14 @@ if (!pr) {
 // 	throw new Error('Invalid PR State: Pull request has not yet been merged')
 // }
 
-console.log('*********************************')
-const commits = await githupApi('GET', pr._links.commits.href)
-console.log('*********************************')
-console.log('COMMITS', JSON.stringify(commits, null, 4))
+try {
+	console.log('*************** STARTING ******************')
+	const commits = await githupApi('GET', pr._links.commits.href)
+	console.log('COMMITS', JSON.stringify(commits.data, null, 4))
+	console.log('*************** DONE ******************')
+} catch (e) {
+	console.error(e)
+}
 
 async function postToPronto(event, parent_id) {
 	const { pull_request, sender } = event
