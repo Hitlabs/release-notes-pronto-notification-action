@@ -1,0 +1,16 @@
+name: Post to Pronto
+on:
+  pull_request:
+    types: [opened, closed, reopened]
+  pull_request_review:
+    types: [submitted, edited]
+jobs:
+  post-to-pronto:
+    runs-on: ubuntu-latest
+    steps:
+      - name: post-message
+        uses: Hitlabs/pr-reviewer-pronto-notification-action
+        with:
+          chat-id: 000000
+          pronto-api-token: ${{ secrets.PRONTO_BOT_API_TOKEN }}
+          github-api-token: ${{ secrets.PRONTO_GITHUB_API_TOKEN }}
