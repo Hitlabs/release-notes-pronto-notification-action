@@ -8,36 +8,33 @@ const chatId = core.getInput('chat-id')
 const prontoDomain = core.getInput('api-domain') || 'api.pronto.io'
 const maxCommits = core.getInput('max-commits') || '10'
 const messagePrefix = core.getInput('message-prefix')
-const { payload } = github.context
 
-const MSG_ID_REGEXP = /\[\[PRONTO_MSG_ID:(\d.*)\]\]/
+const { payload } = github.context
+const tab = '    '
 
 console.log(`Chat ID: ${chatId}`)
 console.log(`The event payload: ${JSON.stringify(payload, null, 2)}`)
 
-if (!chatId || !prontoApiToken || !githubApiToken) {
-	throw new Error(
-		`Invalid parameters provided: ${JSON.stringify({
-			chatId,
-			prontoApiToken,
-			githubApiToken,
-		})}`
-	)
-}
-
-const { pull_request: pr, repository } = payload.pull_request
-if (!pr) {
-	console.log('No pull request associated with this action. Going to bail.')
-	throw new Error('Invalid PR State: Pull request does not exist')
-}
-// if (!pr.merged) {
-// 	console.log('Pull request has not been merged yet. Going to bail.')
-// 	throw new Error('Invalid PR State: Pull request has not yet been merged')
-// }
-
-const tab = '    '
 
 try {
+	console.log('*************** PRECHECK ******************')
+	if (!chatId || !prontoApiToken || !githubApiToken) {
+		throw new Error(
+			`Invalid parameters provided: ${JSON.stringify({
+				chatId,
+				prontoApiToken,
+				githubApiToken,
+			})}`
+		)
+	}
+	const { pull_request: pr, repository } = payload.pull_request
+	if (!pr) {
+		throw new Error('Invalid PR State: Pull request does not exist')
+	}
+	// if (!pr.merged) {
+	// 	console.log('Pull request has not been merged yet. Going to bail.')
+	// 	throw new Error('Invalid PR State: Pull request has not yet been merged')
+	// }
 	console.log('*************** STARTING ******************')
 	const response = await githupApi('GET', pr._links.commits.href)
 	const messageText = generateMessage(pr, repository, response.data)
