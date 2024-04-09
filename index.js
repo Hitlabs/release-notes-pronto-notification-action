@@ -36,18 +36,26 @@ try {
 	console.log('*************** DONE ******************')
 } catch (e) {
 	console.error(e)
-	console.log('Variables', JSON.stringify({
-		chatId,
-		maxCommits,
-		messagePrefix,
-		prontoApiToken,
-		githubApiToken,
-	}))
-	console.log('The event payload:', JSON.stringify(github.context.payload, null, 2))
+	console.log(
+		'Variables',
+		JSON.stringify({
+			chatId,
+			maxCommits,
+			messagePrefix,
+			prontoApiToken,
+			githubApiToken,
+		})
+	)
+	console.log(
+		'The event payload:',
+		JSON.stringify(github.context.payload, null, 2)
+	)
 }
 
 function generateMessage(pr, repo, commits) {
-	const allCommitMsgs = commits.map(c => c.commit.message)
+	const allCommitMsgs = commits
+		.map((c) => c.commit.message?.split(/[\r\n]/)?.[0])
+		.filter((m) => m)
 	const commitMsgs = Array.from(new Set(allCommitMsgs))
 	const forDisplay = commitMsgs.slice(0, parseInt(maxCommits))
 	const moreCount = commitMsgs.length - forDisplay.length
@@ -61,7 +69,7 @@ function generateMessage(pr, repo, commits) {
 		`Branch: ${pr.base.ref}`,
 		'',
 		`Commits (${allCommitMsgs.length}):`,
-		...forDisplay.map(msg => `${tab}-- ${msg}`),
+		...forDisplay.map((msg) => `${tab}-- ${msg}`),
 		moreText ? `${tab}${moreText}` : '',
 	].join('\n')
 
