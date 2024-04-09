@@ -33,7 +33,7 @@ try {
 	const response = await githupApi('GET', pr._links.commits.href)
 	const messageText = generateMessage(pr, repository, response.data)
 	await postToPronto(messageText)
-	console.log('*************** DONE ******************')
+	console.log('***************** DONE ********************')
 } catch (e) {
 	console.error(e)
 	console.log(
