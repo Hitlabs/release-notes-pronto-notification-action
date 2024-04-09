@@ -1,35 +1,23 @@
 {
-  "name": "pr-reviewer-pronto-notification-action",
-  "version": "1.0.0",
-  "description": "Sends a Pronto message when a PR is opened",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Hitlabs/pr-reviewer-pronto-notification-action.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Hitlabs/pr-reviewer-pronto-notification-action/issues"
-  },
-  "homepage": "https://github.com/Hitlabs/pr-reviewer-pronto-notification-action#readme",
-  "dependencies": {
-    "@actions/core": "^1.6.0",
-    "@actions/github": "^5.0.0",
-    "axios": "^0.26.0"
-  },
-  "devDependencies": {
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.2",
-    "prettier": "^3.2.5"
-  },
-  "lint-staged": {
-    "*.{js,css,md}": "prettier --write"
-  }
+	"name": "pr-reviewer-pronto-notification-action",
+	"version": "1.0.0",
+	"description": "Sends a Pronto message when a PR is opened",
+	"main": "index.js",
+	"type": "module",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Hitlabs/pr-reviewer-pronto-notification-action.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/Hitlabs/pr-reviewer-pronto-notification-action/issues"
+	},
+	"homepage": "https://github.com/Hitlabs/pr-reviewer-pronto-notification-action#readme",
+	"dependencies": {
+		"@actions/core": "^1.6.0",
+		"@actions/github": "^5.0.0",
+		"axios": "^0.26.0"
+	}
 }
