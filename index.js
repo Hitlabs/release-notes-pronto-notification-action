@@ -10,6 +10,7 @@ const maxCommits = core.getInput('max-commits') || '10'
 const messagePrefix = core.getInput('message-prefix')
 
 const tab = '    '
+const ignoreCommitMsgs = ['Merge pull request', 'Merge branch']
 
 try {
 	console.log('*************** PRECHECK ******************')
@@ -55,7 +56,7 @@ try {
 function generateMessage(pr, repo, commits) {
 	const allCommitMsgs = commits
 		.map((c) => c.commit.message?.split(/[\r\n]/)?.[0])
-		.filter((m) => m)
+		.filter((m) => m && ignoreCommitMsgs.every(msg => !m.startsWith(msg)))
 
 	const commitMsgs = Array.from(new Set(allCommitMsgs))
 	const forDisplay = commitMsgs.slice(0, parseInt(maxCommits))
