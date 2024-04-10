@@ -58,9 +58,9 @@ function generateMessage(pr, repo, commits) {
 		.map((c) => c.commit.message?.split(/[\r\n]/)?.[0])
 		.filter((m) => m && ignoreCommitMsgs.every(msg => !m.startsWith(msg)))
 
-	const commitMsgs = Array.from(new Set(allCommitMsgs))
-	const forDisplay = commitMsgs.slice(0, parseInt(maxCommits))
-	const moreCount = commitMsgs.length - forDisplay.length
+	const uniqueCommitMsgs = Array.from(new Set(allCommitMsgs))
+	const forDisplay = uniqueCommitMsgs.slice(0, parseInt(maxCommits))
+	const moreCount = allCommitMsgs.length - forDisplay.length
 	const moreText = moreCount > 0 ? `-- and ${moreCount} more commits` : null
 
 	const message = [
